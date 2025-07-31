@@ -9,25 +9,25 @@ const App = () => {
   const [progress, setProgress] = useState(0);
 
   const imagesToLoad = [
-    "/logo.png",
-    "/menHalf.png",
-    "/itemsSlots/sumbol10.png",
-    "/itemsSlots/sumbolJ.png",
-    "/itemsSlots/sumbolQ.png",
-    "/itemsSlots/sumbolK.png",
-    "/itemsSlots/sumbolA.png",
-    "/itemsSlots/lure.png",
-    "/itemsSlots/fishingRod.png",
-    "/itemsSlots/boat.png",
-    "/itemsSlots/cooler.png",
-    "/itemsSlots/fish6.png",
-    "/itemsSlots/fish5.png",
-    "/itemsSlots/fish4.png",
-    "/itemsSlots/fish3.png",
-    "/itemsSlots/goldFish.png",
-    "/itemsSlots/fisherman.png",
-    "/itemsSlots/scatter.png",
-    "/cocos.png"
+    `${import.meta.env.BASE_URL}/logo.png`,
+    `${import.meta.env.BASE_URL}/menHalf.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/sumbol10.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/sumbolJ.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/sumbolQ.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/sumbolK.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/sumbolA.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/lure.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/fishingRod.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/boat.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/cooler.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/fish6.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/fish5.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/fish4.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/fish3.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/goldFish.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/fisherman.png`,
+    `${import.meta.env.BASE_URL}/itemsSlots/scatter.png`,
+    `${import.meta.env.BASE_URL}/cocos.png`
   ];
 
   const loadImagesWithProgress = async () => {
