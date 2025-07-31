@@ -271,17 +271,16 @@ const MainPage = () => {
             onClick={handlerClick}
             disabled={isSpinning || spins <= 0}
             style={{
-              background: `url("${import.meta.env.BASE_URL}/ButtonsState/buttonActive.png") center/100% 110px no-repeat`,
-              ...(isSpinning || spins <= 0 ? {
-                backgroundImage: `url("${import.meta.env.BASE_URL}/ButtonsState/buttonDisable.png")`,
-                color: '#888'
-              } : {})
+              backgroundImage: `url("${import.meta.env.BASE_URL}/ButtonsState/button${isSpinning || spins <= 0 ? 'Disable' : 'Active'}.png")`,
+              backgroundPosition: 'center',
+              backgroundSize: '100% 110px',
+              backgroundRepeat: 'no-repeat'
             }}
           >
-            SPIN
-          </button>
-        </div>
-      </div >
+          SPIN
+        </button>
+      </div>
+    </div >
     </>
   );
 };
