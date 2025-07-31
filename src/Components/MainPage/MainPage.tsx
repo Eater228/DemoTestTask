@@ -5,24 +5,24 @@ import WinModal from '../WinModal/WinModal';
 import classnames from 'classnames';
 
 const IMAGES = {
-  0: "/itemsSlots/sumbol10.png",
-  1: "/itemsSlots/sumbolJ.png",
-  2: "/itemsSlots/sumbolQ.png",
-  3: "/itemsSlots/sumbolK.png",
-  4: "/itemsSlots/sumbolA.png",
-  5: "/itemsSlots/lure.png",
-  6: "/itemsSlots/fishingRod.png",
-  7: "/itemsSlots/boat.png",
-  8: "/itemsSlots/cooler.png",
-  9: "/itemsSlots/fish6.png",
-  10: "/itemsSlots/fish5.png",
-  11: "/itemsSlots/fish4.png",
-  12: "/itemsSlots/fish3.png",
-  13: "/itemsSlots/goldFish.png",
-  14: "/itemsSlots/fisherman.png",
-  15: "/itemsSlots/scatter.png",
-  logo: "/logo.png",
-  menHalf: "/menHalf.png",
+  0: `${import.meta.env.BASE_URL}/itemsSlots/sumbol10.png`,
+  1: `${import.meta.env.BASE_URL}/itemsSlots/sumbolJ.png`,
+  2: `${import.meta.env.BASE_URL}/itemsSlots/sumbolQ.png`,
+  3: `${import.meta.env.BASE_URL}/itemsSlots/sumbolK.png`,
+  4: `${import.meta.env.BASE_URL}/itemsSlots/sumbolA.png`,
+  5: `${import.meta.env.BASE_URL}/itemsSlots/lure.png`,
+  6: `${import.meta.env.BASE_URL}/itemsSlots/fishingRod.png`,
+  7: `${import.meta.env.BASE_URL}/itemsSlots/boat.png`,
+  8: `${import.meta.env.BASE_URL}/itemsSlots/cooler.png`,
+  9: `${import.meta.env.BASE_URL}/itemsSlots/fish6.png`,
+  10: `${import.meta.env.BASE_URL}/itemsSlots/fish5.png`,
+  11: `${import.meta.env.BASE_URL}/itemsSlots/fish4.png`,
+  12: `${import.meta.env.BASE_URL}/itemsSlots/fish3.png`,
+  13: `${import.meta.env.BASE_URL}/itemsSlots/goldFish.png`,
+  14: `${import.meta.env.BASE_URL}/itemsSlots/fisherman.png`,
+  15: `${import.meta.env.BASE_URL}/itemsSlots/scatter.png`,
+  logo: `${import.meta.env.BASE_URL}/logo.png`,
+  menHalf: `${import.meta.env.BASE_URL}/menHalf.png`,
 } as const;
 
 // type CellValue = keyof typeof IMAGES;
@@ -270,6 +270,13 @@ const MainPage = () => {
             className={styles.neonButton}
             onClick={handlerClick}
             disabled={isSpinning || spins <= 0}
+            style={{
+              background: `url("${import.meta.env.BASE_URL}/ButtonsState/buttonActive.png") center/100% 110px no-repeat`,
+              ...(isSpinning || spins <= 0 ? {
+                backgroundImage: `url("${import.meta.env.BASE_URL}/ButtonsState/buttonDisable.png")`,
+                color: '#888'
+              } : {})
+            }}
           >
             SPIN
           </button>

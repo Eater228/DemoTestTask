@@ -17,7 +17,7 @@ const LoadingPage = ({ progress }: LoadingPageProps) => {
           >
           </div>
           <img
-            src="/cocos.png"
+            src={`${import.meta.env.BASE_URL}cocos.png`}
             alt="cocos"
             className={styles.cocosImg}
             style={{ left: `calc(${progress}% - 20px)` }} // рухаємо картинку по прогресу

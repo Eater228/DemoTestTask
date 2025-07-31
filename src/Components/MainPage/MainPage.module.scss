@@ -239,8 +239,7 @@
     font-size: 30px;
     font-family: "Sigmar One", sans-serif;
     color: #ffb3ff;
-    background: url("/ButtonsState/buttonActive.png") center/100% 110px
-      no-repeat;
+    // background: url("/ButtonsState/buttonActive.png") center/100% 110px no-repeat;
     border: none;
     cursor: pointer;
     text-transform: uppercase;
@@ -253,10 +252,10 @@
       text-shadow: 0 0 15px #ff78f0, 0 0 30px #ff78f0;
     }
 
-    &:disabled {
-      color: #888;
-      background-image: url('/ButtonsState/buttonDisable.png');
-    }
+    // &:disabled {
+    //   color: #888;
+    //   background-image: url('/ButtonsState/buttonDisable.png');
+    // }
 
     &:disabled:hover {
     color: #888;

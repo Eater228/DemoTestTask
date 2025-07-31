@@ -31,8 +31,8 @@ const WinModal: FC<WinModalProps> = ({ onClose }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalBackground}>
-        <img src="/logo.png" alt="logo" className={styles.logo} />
-        <img src="/stoneBackground1.png" className={styles.modalImage} alt="background" />
+        <img src={`${import.meta.env.BASE_URL}/logo.png`} alt="logo" className={styles.logo} />
+        <img src={`${import.meta.env.BASE_URL}/stoneBackground1.png`} className={styles.modalImage} alt="background" />
         <div className={styles.modalHeader}>
           <div className={styles.modalContent}>
             <div className={styles.modalTitel}>
@@ -44,12 +44,14 @@ const WinModal: FC<WinModalProps> = ({ onClose }) => {
               <p>+ 250 Free spins</p>
             </div>
             <div className={styles.modalText}>
-              <img src="/ButtonsState/doneTick.png" alt="cross" />
+              <img src={`${import.meta.env.BASE_URL}/ButtonsState/doneTick.png`} alt="cross" />
               <p>Turn on notifications and receive more special bonuses!</p>
             </div>
           </div>
         </div>
-        <button className={styles.closeButton} onClick={handlerClick}>INSTAL THE APP</button>
+        <button className={styles.closeButton} onClick={handlerClick} style={{
+           background: `url(${import.meta.env.BASE_URL}/ButtonsState/buttonActive.png) center/100% 110px no-repeat`,
+        }}>INSTAL THE APP</button>
       </div>
       <div className={styles.timerWrapper}>
         <p className={styles.title}>Bonus will expire in :</p>
