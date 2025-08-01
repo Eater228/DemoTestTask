@@ -52,7 +52,6 @@ const WinModal: FC<WinModalProps> = ({ onClose }) => {
         <button className={styles.closeButton} onClick={handlerClick} style={{
            background: `url(${import.meta.env.BASE_URL}/ButtonsState/buttonActive.png) center/100% 110px no-repeat`,
         }}>INSTAL THE APP</button>
-      </div>
       <div className={styles.timerWrapper}>
         <p className={styles.title}>Bonus will expire in :</p>
         <div className={styles.timeContainer}>
@@ -64,6 +63,7 @@ const WinModal: FC<WinModalProps> = ({ onClose }) => {
           <span className={styles.label}>MINUTES</span>
           <span className={styles.label}>SECONDS</span>
         </div>
+      </div>
       </div>
     </div>
   );

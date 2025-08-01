@@ -169,7 +169,7 @@
     font-family: Changa One;
     font-weight: 400;
     font-style: Regular;
-    font-size: 1.8em;
+    font-size: 1.4em;
     line-height: 24px;
     letter-spacing: 5px;
     vertical-align: middle;
@@ -221,7 +221,18 @@
 }
 
 .timerWrapper {
-  margin-top: 5px;
+  position: relative;
+  z-index: 1;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+
+
+  // margin-top: 5px;
   padding: 10px 10px;
   border-radius: 5px;
   text-align: center;
@@ -365,7 +376,7 @@
   }
 
   .modalBackground {
-    // transform: scale(0.8);
+    transform: scale(0.8);
   }
 
   .logo {
