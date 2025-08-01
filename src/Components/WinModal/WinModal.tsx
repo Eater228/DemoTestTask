@@ -3,9 +3,10 @@ import styles from './WinModal.module.scss';
 
 interface WinModalProps {
   onClose: () => void;
+  imageSrc: Map<string | number, HTMLImageElement>;
 }
 
-const WinModal: FC<WinModalProps> = ({ onClose }) => {
+const WinModal: FC<WinModalProps> = ({ onClose, imageSrc}: WinModalProps) => {
   const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 хвилин у секундах
 
   useEffect(() => {
@@ -24,15 +25,15 @@ const WinModal: FC<WinModalProps> = ({ onClose }) => {
   const formatTime = (value: number) => String(value).padStart(2, "0");
   
   const handlerClick = () => {
-    window.open('https://portfolioyurii.netlify.app/', '_blank');
+    window.open('offer');
     onClose();
   }
 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalBackground}>
-        <img src={`${import.meta.env.BASE_URL}/logo.png`} alt="logo" className={styles.logo} />
-        <img src={`${import.meta.env.BASE_URL}/stoneBackground1.png`} className={styles.modalImage} alt="background" />
+        <img src={`${imageSrc.get('logo')?.src}`} alt="logo" className={styles.logo} />
+        <img src={`${imageSrc.get('stoneBackgroung')?.src}`} className={styles.modalImage} alt="background" />
         <div className={styles.modalHeader}>
           <div className={styles.modalContent}>
             <div className={styles.modalTitel}>
@@ -44,7 +45,7 @@ const WinModal: FC<WinModalProps> = ({ onClose }) => {
               <p>+ 250 Free spins</p>
             </div>
             <div className={styles.modalText}>
-              <img src={`${import.meta.env.BASE_URL}/ButtonsState/doneTick.png`} alt="cross" />
+              <img src={`${imageSrc.get('doneTick')?.src}`} alt="done" />
               <p>Turn on notifications and receive more special bonuses!</p>
             </div>
           </div>
@@ -52,6 +53,7 @@ const WinModal: FC<WinModalProps> = ({ onClose }) => {
         <button className={styles.closeButton} onClick={handlerClick} style={{
            background: `url(${import.meta.env.BASE_URL}/ButtonsState/buttonActive.png) center/100% 110px no-repeat`,
         }}>INSTAL THE APP</button>
+      </div>
       <div className={styles.timerWrapper}>
         <p className={styles.title}>Bonus will expire in :</p>
         <div className={styles.timeContainer}>
@@ -63,7 +65,6 @@ const WinModal: FC<WinModalProps> = ({ onClose }) => {
           <span className={styles.label}>MINUTES</span>
           <span className={styles.label}>SECONDS</span>
         </div>
-      </div>
       </div>
     </div>
   );

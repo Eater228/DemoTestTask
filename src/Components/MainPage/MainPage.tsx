@@ -1,45 +1,14 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import styles from './MainPage.module.scss';
 import InfoModal from '../InfoModal/InfoModal';
 import WinModal from '../WinModal/WinModal';
 import classnames from 'classnames';
 
-const IMAGES = {
-  0: `${import.meta.env.BASE_URL}/itemsSlots/sumbol10.png`,
-  1: `${import.meta.env.BASE_URL}/itemsSlots/sumbolJ.png`,
-  2: `${import.meta.env.BASE_URL}/itemsSlots/sumbolQ.png`,
-  3: `${import.meta.env.BASE_URL}/itemsSlots/sumbolK.png`,
-  4: `${import.meta.env.BASE_URL}/itemsSlots/sumbolA.png`,
-  5: `${import.meta.env.BASE_URL}/itemsSlots/lure.png`,
-  6: `${import.meta.env.BASE_URL}/itemsSlots/fishingRod.png`,
-  7: `${import.meta.env.BASE_URL}/itemsSlots/boat.png`,
-  8: `${import.meta.env.BASE_URL}/itemsSlots/cooler.png`,
-  9: `${import.meta.env.BASE_URL}/itemsSlots/fish6.png`,
-  10: `${import.meta.env.BASE_URL}/itemsSlots/fish5.png`,
-  11: `${import.meta.env.BASE_URL}/itemsSlots/fish4.png`,
-  12: `${import.meta.env.BASE_URL}/itemsSlots/fish3.png`,
-  13: `${import.meta.env.BASE_URL}/itemsSlots/goldFish.png`,
-  14: `${import.meta.env.BASE_URL}/itemsSlots/fisherman.png`,
-  15: `${import.meta.env.BASE_URL}/itemsSlots/scatter.png`,
-  logo: `${import.meta.env.BASE_URL}/logo.png`,
-  menHalf: `${import.meta.env.BASE_URL}/menHalf.png`,
-} as const;
+type MainPageProps = {
+  imageCache: Map<string | number, HTMLImageElement>; // Changed to Map
+};
 
-// type CellValue = keyof typeof IMAGES;
-
-const MainPage = () => {
-  const imageCache = useMemo(() => {
-    const cache = new Map<number | string, HTMLImageElement>();
-    Object.entries(IMAGES).forEach(([key, src]) => {
-      const img = new Image();
-      img.src = src;
-      // Для числових ключів зберігаємо як number, для рядкових - як string
-      const cacheKey = isNaN(Number(key)) ? key : Number(key);
-      cache.set(cacheKey, img);
-    });
-    return cache;
-  }, []);
-
+const MainPage = ({ imageCache }: MainPageProps) => {
   const [spins, setSpins] = useState(3);
   const [displayPosition, setDisplayPosition] = useState<number[][]>([
     [10, 0, 11],
@@ -56,11 +25,6 @@ const MainPage = () => {
   const [isWinModalOpen, setIsWinModalOpen] = useState(false);
   const [winningCells, setWinningCells] = useState<{ row: number, col: number }[]>([]);
   const [highlightedCells, setHighlightedCells] = useState<{ row: number, col: number }[]>([]);
-
-  // Функція для отримання URL з кешу
-  const getImageSrc = useCallback((key: number | string) => {
-    return imageCache.get(key)?.src || IMAGES[key as keyof typeof IMAGES];
-  }, [imageCache]);
 
   const winningCellsMap = useMemo(() => {
     const map = new Map<string, boolean>();
@@ -101,11 +65,11 @@ const MainPage = () => {
   }, []);
 
   const getRandomSymbol = useCallback(() => {
-    const keys = Object.keys(IMAGES)
-      .filter(key => !isNaN(Number(key)))
+    const keys = Array.from(imageCache.keys())
+      .filter(key => typeof key === 'number')
       .map(Number);
     return keys[Math.floor(Math.random() * keys.length)];
-  }, []);
+  }, [imageCache]);
 
   const spinColumn = useCallback(async (colIndex: number, spinDuration: number) => {
     const startTime = Date.now();
@@ -119,7 +83,7 @@ const MainPage = () => {
       const isSlowingDown = remainingTime < 1000;
 
       setDisplayPosition(prev => {
-        const newPosition = [...prev];
+        const newPosition = prev.map(row => [...row]);
         for (let row = 0; row < 3; row++) {
           if (!isSlowingDown || Math.random() > 0.7) {
             newPosition[row][colIndex] = getRandomSymbol();
@@ -133,7 +97,7 @@ const MainPage = () => {
     }
 
     setDisplayPosition(prev => {
-      const newPosition = [...prev];
+      const newPosition = prev.map(row => [...row]);
       for (let row = 0; row < 3; row++) {
         newPosition[row][colIndex] = targetPosition[row][colIndex];
       }
@@ -169,7 +133,7 @@ const MainPage = () => {
       spinColumn(2, spinDurations[2])
     ]);
 
-    const cells = checkWinningLines(targetPosition);
+    const cells = checkWinningLines(targetPosition); // Changed to use newTargetPosition
     if (cells.length > 0) {
       setWinningCells(cells);
     }
@@ -182,36 +146,29 @@ const MainPage = () => {
       setHighlightedCells(winningCells);
       setTimeout(() => {
         setIsWinModalOpen(true);
-      }, 2000); // slight delay before showing animation
+      }, 2000);
     }
-  }, [winningCells])
+  }, [winningCells]);
 
-  useEffect(() => {
-    const preloadImages = () => {
-      Object.values(IMAGES).forEach((src) => {
-        const img = new Image();
-        img.src = src;
-      });
-    };
-    preloadImages();
-  }, []);
-
+  // Removed the preloadImages effect since images are already preloaded in App
 
   return (
     <>
-      {isInfoModalOpen && <InfoModal onClose={() => setIsInfoModalOpen(false)} />}
+      {isInfoModalOpen && <InfoModal onClose={() => setIsInfoModalOpen(false)} imageSrc={imageCache} />}
       {isWinModalOpen && (
         <WinModal onClose={() => {
           setIsWinModalOpen(false);
           setHighlightedCells([]);
-        }} />
+        }}
+        imageSrc={imageCache}
+        />
       )}
 
       <div className={styles.mainPageContainer}>
         <div className={styles.header}>
           <div className={styles.logo}>
             <img
-              src={getImageSrc('logo')}
+              src={`${imageCache.get('logo')?.src}`}
               alt="Logo"
               loading="eager"
               decoding="async"
@@ -219,7 +176,7 @@ const MainPage = () => {
           </div>
           <div className={styles.men}>
             <img
-              src={getImageSrc('menHalf')}
+              src={`${imageCache.get('menHalf')?.src}`}
               alt="Men"
               loading="eager"
               decoding="async"
@@ -248,7 +205,7 @@ const MainPage = () => {
                     }}
                   >
                     <img
-                      src={getImageSrc(cell)}
+                      src={`${imageCache.get(cell)?.src}`}
                       alt={`icon-${cell}`}
                       className={classnames(styles.cellImage, { [styles.winningImage]: isWinning })}
                       loading="eager"
@@ -277,10 +234,10 @@ const MainPage = () => {
               backgroundRepeat: 'no-repeat'
             }}
           >
-          SPIN
-        </button>
+            SPIN
+          </button>
+        </div>
       </div>
-    </div >
     </>
   );
 };
